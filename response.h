@@ -42,14 +42,15 @@ class Response
 
 public:
 
-Response(Request&r)
+Response(Request& r)
 {
    auto uri=r.get_url();
-   cout<<uri<<endl;
+   
    if(uri.size()>1)
    {
+      cout<<uri.size()<<endl;
 
-   auto  file_path=get_file_path(uri);
+   auto  file_path=get_file_path(usa::string(uri).split('/')[1]);
    if (file_path != "")
    {
       cout<<file_path<<endl;
@@ -78,23 +79,29 @@ else{
 
 void set_content_type(std::string file_extention)
 {
-   if(file_extention == ".html")
+   if(file_extention == "html")
    content_type="text/html";
 
-   else if (file_extention==".js")
+   else if (file_extention=="js")
    content_type="text/js";
 
-   else if (file_extention==".css")
+   else if (file_extention=="css")
    content_type="text/css";
    
-   else if (file_extention==".png")
+   else if (file_extention=="png")
    content_type="image/png";
 
-   else if (file_extention==".jpeg")
+   else if (file_extention=="jpeg")
    content_type="image/jpeg";
    
-   else if(file_extention==".gif")
+   else if(file_extention=="gif")
    content_type="image/gif";
+
+   else
+    content_type="text/plain";
+
+
+   cout<<file_extention<<endl;
 }
 
 void set_header()
@@ -137,7 +144,7 @@ void  send_response(int file_discripter)
   
 std:: string response=string(header)+body;
 
-if(write(file_discripter,response.c_str(), response.size())<0)
+if(write(file_discripter,response.c_str(), response.size()+header.size())<0)
 {
    std::cout<<"in witing";
 }
@@ -145,7 +152,14 @@ if(write(file_discripter,response.c_str(), response.size())<0)
 }
 void print()
 {
-   std::cout<<body<<endl;
+   if (body)
+   {std::cout<<header<<endl;
+   cout<<body<<endl;
+
+   }
+   
+   else
+   std::cout<<"empty"<<endl;
 }
 
 };

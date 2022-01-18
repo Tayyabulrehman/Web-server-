@@ -77,7 +77,7 @@ int main()
         request.parser(string(buffer));
         Response r(request);
         //request.print();
-        //r.send_response(new_socket);
+        r.send_response(new_socket);
          r.print();
          //write(new_socket , hello ,strlen(hello));
         close(new_socket);

@@ -4,7 +4,20 @@
 
 #define Utility_H
 #include <dirent.h> 
+#include <chrono>
+#include <ctime>
  const char* base_dir ="/home/chaudhrytayyab/Host";
+
+std::string get_local_time()
+{
+
+     auto timenow =
+      chrono::system_clock::to_time_t(chrono::system_clock::now());
+return  string( ctime(&timenow));
+}
+
+
+
 
 std::string get_file_path(std::string uri)
 {
@@ -23,7 +36,7 @@ std::string get_file_path(std::string uri)
         }
         closedir(directorty);
     }
-    return NULL;
+    return "" ;
 }
 
 #endif
